@@ -1,0 +1,43 @@
+Admin Door Script:
+local adminDoor = script.Parent
+local adminGamePassID = 12345678910  -- Replace with your actual Admin Game Pass ID
+
+-- List of players who are admins
+local admins = {
+	[""] = true,
+	["MrFlimFlam"] = true
+}
+
+adminDoor.Touched:Connect(function(hit)
+	local player = game.Players:GetPlayerFromCharacter(hit.Parent)
+
+	if player then
+		-- Check if the player is in the admin list or has the admin game pass
+		if admins[player.Name] or player:HasPass(adminGamePassID) then
+			adminDoor.CanCollide = false
+			wait(1)
+			adminDoor.CanCollide = true
+		else
+			player:Kick("You need to be an admin or have the Admin pass to enter!")
+		end
+	end
+end)
+
+
+VIP door script:
+local vipDoor = script.Parent
+local gamePassID = 12345678910  -- Replace with your actual VIP Game Pass ID
+
+vipDoor.Touched:Connect(function(hit)
+	local player = game.Players:GetPlayerFromCharacter(hit.Parent)
+
+	if player then
+		if player:HasPass(gamePassID) then
+			vipDoor.CanCollide = false
+			wait(1)
+			vipDoor.CanCollide = true
+		else
+			player:Kick("You need a VIP pass to enter!")
+		end
+	end
+end)
